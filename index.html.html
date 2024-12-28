@@ -1,0 +1,271 @@
+
+
+    
+ 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Shopping🎁</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎄 Christmas Shopping 🎁</h1>
+        </header>
+    
+        <!-- Product Grid -->
+        <div id="product-wrapper">
+            <div id="product-grid">
+                <!-- 1st Row -->
+                <div class="product">
+                    <img src="https://www.shutterstock.com/image-vector/christmas-toys-piled-santas-sack-600w-531328711.jpg" alt="Christmas Toy">
+                    <p>Christmas Toy 🎁</p>
+                    <p class="price">$10.99</p>
+                    <button class="add-to-cart" data-product="Christmas Toy 🎁" data-price="10.99">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://ih1.redbubble.net/image.5304824126.3609/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" alt="Christmas Socks">
+                    <p>Christmas Socks 🎅</p>
+                    <p class="price">$5.49</p>
+                    <button class="add-to-cart" data-product="Christmas Socks 🎅" data-price="5.49">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://img.freepik.com/premium-vector/christmas-candy-cartoon-sticker-xmas-candies-stickers-decoration-winter-holidays_724548-2680.jpg" alt="Christmas Candy">
+                    <p>Christmas Candy 🍬</p>
+                    <p class="price">$2.99</p>
+                    <button class="add-to-cart" data-product="Christmas Candy 🍬" data-price="2.99">Add to Cart</button>
+                </div>
+    
+                <!-- 2nd Row -->
+                <div class="product">
+                    <img src="https://previews.123rf.com/images/bluedarkat/bluedarkat1309/bluedarkat130900030/22281236-funny-christmas-santa-and-reindeer-cartoon.jpg" alt="Reindeer">
+                    <p>Reindeer 🦌</p>
+                    <p class="price">$15.99</p>
+                    <button class="add-to-cart" data-product="Reindeer 🦌" data-price="15.99">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://img.icons8.com/clouds/256/sleigh.png" alt="Sleigh">
+                    <p>Sleigh 🎅</p>
+                    <p class="price">$25.99</p>
+                    <button class="add-to-cart" data-product="Sleigh 🎅" data-price="25.99">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://img.icons8.com/clouds/256/christmas-gift.png" alt="Gift Box">
+                    <p>Gift Box 🎁</p>
+                    <p class="price">$9.99</p>
+                    <button class="add-to-cart" data-product="Gift Box 🎁" data-price="9.99">Add to Cart</button>
+                </div>
+    
+                <!-- 3rd Row -->
+                <div class="product">
+                    <img src="https://media.istockphoto.com/id/2161316077/vector/snow-globe-with-snowy-forest-illustration-new-year-or-christmas-decor.jpg?s=612x612&w=0&k=20&c=2Q4xafuUhUHNUR8-7RMjh6k3epVY5RksJ6LvcRlCCSo=" alt="Snow Globe">
+                    <p>Snow Globe ❄️</p>
+                    <p class="price">$12.99</p>
+                    <button class="add-to-cart" data-product="Snow Globe ❄️" data-price="12.99">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://img.icons8.com/clouds/256/candy-cane.png" alt="Candy Cane">
+                    <p>Candy Cane 🍭</p>
+                    <p class="price">$3.99</p>
+                    <button class="add-to-cart" data-product="Candy Cane 🍭" data-price="3.99">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://img.icons8.com/clouds/256/elf.png" alt="Christmas Elf">
+                    <p>Christmas Elf 🎄</p>
+                    <p class="price">$19.99</p>
+                    <button class="add-to-cart" data-product="Christmas Elf 🎄" data-price="19.99">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Cart Section -->
+        <div id="cart">
+            <h2>Your Christmas Cart 🎁</h2>
+            <div id="cart-items"></div>
+            <div id="cart-total">Total: $0.00</div>
+            <button id="checkout-btn">Checkout 🎅</button>
+        </div>
+    </div>
+    <!-- Payment Form (Hidden initially) -->
+<div id="payment-form" style="display: none;">
+  <form id="payment-request-form">
+    <div id="payment-element"></div>
+    <button id="submit-btn">Pay Now</button>
+  </form>
+</div>
+    <script>
+        // Cart array to store items
+        let cart = [];
+    
+        // Function to add item to cart
+        function addToCart(productName, productPrice) {
+            // Check if product is already in cart
+            const existingProduct = cart.find(item => item.name === productName);
+    
+            if (existingProduct) {
+                // If product already exists, increment quantity
+                existingProduct.quantity++;
+            } else {
+                // If product doesn't exist, add new item to cart
+                cart.push({
+                    name: productName,
+                    price: parseFloat(productPrice),
+                    quantity: 1
+                });
+            }
+    
+            // Update the cart display
+            updateCart();
+        }
+    
+        // Function to remove item from cart
+        function removeFromCart(productName) {
+            // Find the product in the cart and remove it
+            cart = cart.filter(item => item.name !== productName);
+    
+            // Update the cart display
+            updateCart();
+        }
+    
+        // Function to update the cart display
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+    
+            // Clear the current cart items
+            cartItems.innerHTML = '';
+    
+            // Loop through cart and create a list of items
+            let total = 0;
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`;
+    
+                // Add a Remove button for each product
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.addEventListener('click', () => removeFromCart(item.name)); // Remove product when clicked
+                itemElement.appendChild(removeButton);
+    
+                cartItems.appendChild(itemElement);
+                total += item.price * item.quantity;
+            });
+    
+            // Display the total amount
+            cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
+        }
+    
+        // Function to handle checkout (alert for now)
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add some items before checking out.');
+            } else {
+                alert('Thank you for shopping with us! Your order has been placed.');
+                cart = []; // Empty the cart after checkout
+                updateCart(); // Update the cart display
+            }
+        }
+    
+        // Event listeners for the "Add to Cart" buttons
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productName = event.target.getAttribute('data-product');
+                const productPrice = event.target.getAttribute('data-price');
+                addToCart(productName, productPrice);
+            });
+        });
+    
+        // Event listener for the checkout button
+        document.getElementById('checkout-btn').addEventListener('click', checkout);
+    </script>
+
+<div class="snowflake">❄️</div>
+<div class="snowflake">☃️</div>
+<div class="snowflake">❄️</div>
+<div class="snowflake">☃️</div>
+<div class="snowflake">❄️</div>
+<div class="snowflake">☃️</div>
+
+
+<audio id="hover-sound" src="click-21156.mp3" preload="auto"></audio>
+
+<script>
+    // Get all the product elements
+    const products = document.querySelectorAll('.product');
+    
+    // Get the audio element
+    const hoverSound = document.getElementById('hover-sound');
+
+    // Add event listeners to each product for mouseenter
+    products.forEach(product => {
+        product.addEventListener('mouseenter', () => {
+            hoverSound.play(); // Play sound when mouse enters the product
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+       
+
+        
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+  
+
+
+</body>
+
+</html>
